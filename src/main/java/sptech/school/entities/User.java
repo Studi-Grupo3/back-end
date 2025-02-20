@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.br.CPF;
 import sptech.school.dtos.UserDTO;
 
 @Entity
@@ -28,6 +29,10 @@ public class User {
     @Column(unique = true)
     private String email;
 
+    @CPF
+    @NotBlank
+    private String cpf;
+
     @NotNull
     private String password;
 
@@ -38,14 +43,7 @@ public class User {
         this(null
                 , userDTO.username()
                 , userDTO.email()
-                , userDTO.password()
-                , userDTO.role());
-    }
-
-    public User(@Valid UserDTO userDTO, Integer id) {
-        this(id
-                , userDTO.username()
-                , userDTO.email()
+                , userDTO.cpf()
                 , userDTO.password()
                 , userDTO.role());
     }

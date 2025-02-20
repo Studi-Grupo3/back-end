@@ -6,5 +6,7 @@ import sptech.school.entities.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-    User findByEmail(String email);
+    User findByEmailContainingIgnoreCase(String email);
+    
+    User findByEmailContainingIgnoreCaseOrCpfAndPassword(String email, String cpf, String password);
 }
