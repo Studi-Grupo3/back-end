@@ -8,6 +8,8 @@ import sptech.school.entities.User;
 import sptech.school.exceptions.UserException;
 import sptech.school.repositories.UserRepository;
 
+import java.util.List;
+
 @Service
 public class UserService {
     @Autowired
@@ -27,7 +29,7 @@ public class UserService {
 
     public User update(UserDTO updateUserDTO, Integer id) {
         User updatedUser = userRepository.findById(id)
-                .orElseThrow(() -> new UserException("Usuário com o id %d não encontrado!".formatted(id)));
+                .orElseThrow(() -> new UserException("Usuário com o id %d não está registrado!".formatted(id)));
 
         if (updateUserDTO.username() != null && !updateUserDTO.username().isBlank()) {
             updatedUser.setUsername(updateUserDTO.username());
@@ -43,6 +45,10 @@ public class UserService {
         }
 
         return userRepository.save(updatedUser);
+    }
+
+    public List<User> listUsers() {
+        return userRepository.findAll();
     }
 
     public void delete(Integer id) {

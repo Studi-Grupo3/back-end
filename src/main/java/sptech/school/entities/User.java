@@ -21,15 +21,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotNull()
+    @NotBlank(message = "O nome não pode ser vazio")
     private String username;
 
-    @Email(message = "O email deve ser válido")
+    @Email(message = "O email está inválido")
     @NotBlank(message = "O email é obrigatório")
     @Column(unique = true)
     private String email;
 
-    @CPF
+    @CPF(message = "O cpf está inválido")
     @NotBlank
     private String cpf;
 

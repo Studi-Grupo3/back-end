@@ -8,6 +8,8 @@ import sptech.school.dtos.UserDTO;
 import sptech.school.entities.User;
 import sptech.school.services.UserService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/usuarios")
 public class UserController {
@@ -42,5 +44,12 @@ public class UserController {
     private ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
         userService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/listar")
+    private ResponseEntity<List<User>> listUsers(){
+        List<User> users = userService.listUsers();
+
+        return ResponseEntity.ok().body(users);
     }
 }
