@@ -11,18 +11,12 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
 import sptech.school.dtos.UserDTO;
 
-@Entity
-@Table(name = "tb_usuario")
+@MappedSuperclass
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public abstract class User {
 
     @NotBlank(message = "O nome não pode ser vazio")
-    private String username;
+    private String name;
 
     @Email(message = "O email está inválido")
     @NotBlank(message = "O email é obrigatório")
@@ -30,21 +24,9 @@ public class User {
     private String email;
 
     @CPF(message = "O cpf está inválido")
-    @NotBlank
+    @NotBlank(message = "O cpf é obrigatório")
     private String cpf;
 
     @NotNull
     private String password;
-
-    @NotNull
-    private String role;
-
-    public User(@Valid UserDTO userDTO) {
-        this(null
-                , userDTO.username()
-                , userDTO.email()
-                , userDTO.cpf()
-                , userDTO.password()
-                , userDTO.role());
-    }
 }

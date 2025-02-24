@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sptech.school.dtos.UserDTO;
 import sptech.school.entities.User;
-import sptech.school.services.UserService;
+import sptech.school.services.UserServ;
 
 import java.util.List;
 
@@ -14,41 +14,41 @@ import java.util.List;
 @RequestMapping("/usuarios")
 public class UserController {
     @Autowired
-    private UserService userService;
+    private UserServ userServ;
 
     @PostMapping
     private ResponseEntity<User> createUser(@RequestBody @Valid UserDTO userDTO) {
-        User createdUser = userService.create(userDTO);
+        User createdUser = userServ.create(userDTO);
         return ResponseEntity.ok().body(createdUser);
     }
 
     @GetMapping("buscar-por-id/{id}")
     private ResponseEntity<User> getUserById(@PathVariable Integer id) {
-        User searchedUser = userService.findById(id);
+        User searchedUser = userServ.findById(id);
         return ResponseEntity.ok().body(searchedUser);
     }
 
     @GetMapping("buscar-por-email{email}")
     private ResponseEntity<User> getUserByEmail(@PathVariable String email) {
-        User searchedUser = userService.findByEmail(email);
+        User searchedUser = userServ.findByEmail(email);
         return ResponseEntity.ok().body(searchedUser);
     }
 
     @PutMapping("/{id}")
     private ResponseEntity<User> updateUser(@RequestBody UserDTO userDTO, @PathVariable Integer id) {
-        User updatedUser = userService.update(userDTO, id);
+        User updatedUser = userServ.update(userDTO, id);
         return ResponseEntity.ok().body(updatedUser);
     }
 
     @DeleteMapping("/{id}")
     private ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
-        userService.delete(id);
+        userServ.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/listar")
     private ResponseEntity<List<User>> listUsers(){
-        List<User> users = userService.listUsers();
+        List<User> users = userServ.listUsers();
 
         return ResponseEntity.ok().body(users);
     }

@@ -5,8 +5,8 @@ import org.springframework.stereotype.Repository;
 import sptech.school.entities.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository<T extends User> extends JpaRepository<T, Integer> {
     User findByEmailContainingIgnoreCase(String email);
     
-    User findByEmailContainingIgnoreCaseOrCpfAndPassword(String email, String cpf, String password);
+    User findByEmailIgnoreCaseOrCpfAndPassword(String email, String cpf, String password);
 }
