@@ -19,16 +19,16 @@ public class Appointment {
 
     @ManyToOne
     @JoinColumn(name = "id_student", nullable = false)
-    private User student;
+    private Student student;
 
     @ManyToOne
     @JoinColumn(name = "id_teacher", nullable = false)
-    private User teacher;
+    private Teacher teacher;
 
     @Column(columnDefinition = "DATETIME(0)")
     private LocalDateTime dateTime;
 
-    public Appointment(User student, User teacher, LocalDateTime dateTime) {
+    public Appointment(Student student, Teacher teacher, LocalDateTime dateTime) {
         this.student = student;
         this.teacher = teacher;
         this.dateTime = dateTime;

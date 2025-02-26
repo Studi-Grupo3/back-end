@@ -6,9 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import sptech.school.dtos.AppointmentDTO;
 import sptech.school.entities.Appointment;
-import sptech.school.entities.User;
+import sptech.school.entities.Student;
+import sptech.school.entities.Teacher;
+import sptech.school.mappers.AppointmentMapper;
 import sptech.school.repositories.AppointmentRepository;
-import sptech.school.repositories.UserRepository;
 
 import java.util.List;
 
@@ -16,21 +17,26 @@ import java.util.List;
 public class AppointmentService {
     @Autowired
     private AppointmentRepository appointmentRepository;
+
     @Autowired
-    private UserRepository userRepository;
+    private AppointmentMapper appointmentMapper;
+
+    @Autowired
+    private TeacherService teacherService;
+
+    @Autowired
+    private StudentService studentService;
 
     public Appointment create(AppointmentDTO dto) {
-        User userStudent = userRepository.findById(dto.idStudent())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found."));
+        Student student = studentService.findById(dto.idStudent());
 
-        User userTeacher = userRepository.findById(dto.idTeacher())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found."));
+        Teacher teacher = teacherService.findById(dto.idTeacher());
 
         if (appointmentRepository.existsByStudentIdAndTeacherIdAndDateTime(dto.idStudent(), dto.idTeacher(), dto.dateTime())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Users already have an appointment at this time.");
         }
 
-        Appointment appointment = new Appointment(userStudent, userTeacher,dto.dateTime());
+        Appointment appointment = new Appointment(student, teacher,dto.dateTime());
         return appointmentRepository.save(appointment);
     }
 
@@ -39,8 +45,9 @@ public class AppointmentService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Appointment not found."));
     }
 
-    public List<Appointment> listAll() {
-        return appointmentRepository.findAll();
+    public List<AppointmentDTO> listAll() {
+        return appointmentRepository.findAll()
+                .stream().map(appointmentMapper::toDto).toList();
     }
 
     public Appointment update(AppointmentDTO dto, Integer id) {

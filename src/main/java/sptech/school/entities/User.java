@@ -1,32 +1,35 @@
 package sptech.school.entities;
 
-import jakarta.persistence.*;
-import jakarta.validation.Valid;
+import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.antlr.v4.runtime.misc.NotNull;
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
-import sptech.school.dtos.UserDTO;
 
 @MappedSuperclass
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public abstract class User {
 
-    @NotBlank(message = "O nome não pode ser vazio")
+    @NotBlank(message = "The name is mandatory")
     private String name;
 
-    @Email(message = "O email está inválido")
-    @NotBlank(message = "O email é obrigatório")
+    @Email(message = "The email is invalid")
+    @NotBlank(message = "The email is mandatory")
     @Column(unique = true)
     private String email;
 
-    @CPF(message = "O cpf está inválido")
-    @NotBlank(message = "O cpf é obrigatório")
+    @CPF(message = "The CPF is invalid")
+    @NotBlank(message = "The CPF is mandatory")
     private String cpf;
 
-    @NotNull
+    @NotBlank(message = "The password is mandatory")
     private String password;
+
+    public abstract Integer getId();
 }

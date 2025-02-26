@@ -1,27 +1,33 @@
 package sptech.school.services;
 
+import jakarta.validation.Valid;
+import sptech.school.dtos.UserLoginDTO;
 import sptech.school.entities.User;
+import sptech.school.exceptions.UserException;
 import sptech.school.repositories.UserRepository;
 
-public abstract class AbstractUserService<T extends User> implements UserService<T>  {
+public abstract class AbstractUserService<T extends User, DTO> implements UserService<T, DTO>  {
     protected final UserRepository<T> repository;
 
     public AbstractUserService(UserRepository<T> repository) {
         this.repository = repository;
     }
 
+    @Override
+    public T update(@Valid DTO dto, Integer id) {
+        T userTarget = repository.findById(id)
+                .orElseThrow(() -> new UserException("User not found"));
+
+        userTarget = validateSpecify(dto, userTarget);
+
+        return repository.save(userTarget);
+    }
+
 
     @Override
-    public T update(T user) {
-        validateCommon(user);
-        validateSpecify(user);
-
-        return repository.save(user);
+    public T login(@Valid UserLoginDTO user) {
+        return repository.findByEmailIgnoreCaseOrCpfAndPassword(user.email(), user.cpf(), user.password());
     }
 
-    public void validateCommon(T user){
-
-    }
-
-    protected abstract void validateSpecify(T user);
+    protected abstract T validateSpecify(DTO dto, T userTarget);
 }

@@ -9,14 +9,17 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "tb_teacher")
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class Teacher extends User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank(message = "")
+    @NotBlank(message = "The specialty is mandatory")
     private String specialty;
 
+    public Teacher(String name, String email, String cpf, String password, String specialty) {
+        super(name, email, cpf, password);
+        this.specialty = specialty;
+    }
 }
