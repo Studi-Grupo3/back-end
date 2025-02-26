@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tb_appointment")
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Appointment {
@@ -31,6 +30,38 @@ public class Appointment {
     public Appointment(Student student, Teacher teacher, LocalDateTime dateTime) {
         this.student = student;
         this.teacher = teacher;
+        this.dateTime = dateTime;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
 }

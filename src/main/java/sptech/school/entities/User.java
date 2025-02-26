@@ -12,7 +12,6 @@ import org.hibernate.validator.constraints.br.CPF;
 
 @MappedSuperclass
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public abstract class User {
 
@@ -31,5 +30,10 @@ public abstract class User {
     @NotBlank(message = "The password is mandatory")
     private String password;
 
-    public abstract Integer getId();
+    public User(String name, String email, String cpf, String password) {
+        this.name = name;
+        this.email = email;
+        this.cpf = cpf;
+        this.password = password;
+    }
 }
