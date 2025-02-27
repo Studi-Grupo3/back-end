@@ -1,15 +1,10 @@
 package sptech.school.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tb_appointment")
-@AllArgsConstructor
-@NoArgsConstructor
 public class Appointment {
 
     @Id
@@ -26,6 +21,9 @@ public class Appointment {
 
     @Column(columnDefinition = "DATETIME(0)")
     private LocalDateTime dateTime;
+
+    public Appointment() {
+    }
 
     public Appointment(Student student, Teacher teacher, LocalDateTime dateTime) {
         this.student = student;

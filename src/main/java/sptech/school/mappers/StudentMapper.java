@@ -7,8 +7,8 @@ import sptech.school.entities.Student;
 
 @Mapper(componentModel = "spring", uses = StringMapper.class)
 public interface StudentMapper {
-    StudentDTO toDto(Student student);
-    Student toEntity(StudentDTO dto);
+    @Valid StudentDTO toDto(Student student);
+    Student toEntity(@Valid StudentDTO dto);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateStudentFromDto(@Valid StudentDTO studentDTO, @MappingTarget Student student);
