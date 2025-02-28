@@ -2,6 +2,7 @@ package sptech.school.dtos;
 
 import jakarta.validation.constraints.Email;
 import org.hibernate.validator.constraints.br.CPF;
+import sptech.school.enums.Discipline;
 
 public record TeacherDTO(
         String name,
@@ -14,5 +15,7 @@ public record TeacherDTO(
 
         String password,
 
-        String specialty
-) {}
+        Discipline discipline
+) {
+
+}

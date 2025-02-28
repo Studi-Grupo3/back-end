@@ -21,10 +21,10 @@ public class TeacherController {
     private TeacherMapper teacherMapper;
 
     @PostMapping
-    public ResponseEntity<TeacherDTO> createUser(@RequestBody @Valid TeacherDTO teacherDTO) {
+    public ResponseEntity<Teacher> createUser(@RequestBody @Valid TeacherDTO teacherDTO) {
         Teacher teacherCreated = teacherService.create(teacherMapper.toEntity(teacherDTO));
         System.out.println(teacherCreated.toString());
-        return ResponseEntity.status(201).body(teacherMapper.toDto(teacherCreated));
+        return ResponseEntity.status(201).body(teacherCreated);
     }
 
     @GetMapping("/{id}")
@@ -54,7 +54,6 @@ public class TeacherController {
     @GetMapping("/listar")
     public ResponseEntity<List<TeacherDTO>> findAllTeachers() {
         List<TeacherDTO> teacherDTOS = teacherService.listAll();
-
         return ResponseEntity.status(200).body(teacherDTOS);
     }
 }

@@ -2,30 +2,33 @@ package sptech.school.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import sptech.school.enums.Discipline;
 
 @Entity
 @Table(name = "tb_teacher")
-public class Teacher extends User{
+public class Teacher extends User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank(message = "The specialty is mandatory")
-    private String specialty;
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private Discipline discipline;
 
     public Teacher() {
     }
 
-    public Teacher(String name, String email, String cpf, String password, String specialty) {
+    public Teacher(String name, String email, String cpf, String password, Discipline discipline) {
         super(name, email, cpf, password);
-        this.specialty = specialty;
+        this.discipline = discipline;
     }
 
     @Override
     public String toString() {
         return "Teacher{" +
                 "id=" + id +
-                ", specialty='" + specialty + '\'' +
+                ", discipline='" + discipline + '\'' +
                 '}';
     }
 
@@ -37,11 +40,11 @@ public class Teacher extends User{
         this.id = id;
     }
 
-    public String getSpecialty() {
-        return specialty;
+    public Discipline getDiscipline() {
+        return discipline;
     }
 
-    public void setSpecialty(String specialty) {
-        this.specialty = specialty;
+    public void setDiscipline(Discipline discipline) {
+        this.discipline = discipline;
     }
 }

@@ -19,6 +19,7 @@ public abstract class User {
 
     @CPF(message = "The CPF is invalid")
     @NotBlank(message = "The CPF is mandatory")
+    @Column(unique = true)
     private String cpf;
 
     @NotBlank(message = "The password is mandatory")
