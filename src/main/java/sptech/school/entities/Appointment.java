@@ -1,6 +1,9 @@
 package sptech.school.entities;
 
 import jakarta.persistence.*;
+import sptech.school.enums.AppointmentStatus;
+import sptech.school.enums.PaymentStatus;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -11,24 +14,38 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "id_student", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "fkStudent", nullable = false)
     private Student student;
 
-    @ManyToOne
-    @JoinColumn(name = "id_teacher", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "fkTeacher", nullable = false)
     private Teacher teacher;
 
     @Column(columnDefinition = "DATETIME(0)")
     private LocalDateTime dateTime;
 
+    private Double lessonDuration;
+
+    @Enumerated(EnumType.STRING)
+    private AppointmentStatus status;
+
+    private String location;
+
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus paymentStatus;
+
     public Appointment() {
     }
 
-    public Appointment(Student student, Teacher teacher, LocalDateTime dateTime) {
+    public Appointment(Student student, Teacher teacher, LocalDateTime dateTime, Double lessonDuration, String location) {
         this.student = student;
         this.teacher = teacher;
         this.dateTime = dateTime;
+        this.lessonDuration = lessonDuration;
+        this.location = location;
+        this.status = AppointmentStatus.SCHEDULED;
+        this.paymentStatus = PaymentStatus.PENDING;
     }
 
     public Integer getId() {
@@ -62,4 +79,29 @@ public class Appointment {
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
+
+    public Double getLessonDuration() {
+        return lessonDuration;
+    }
+
+    public void setLessonDuration(Double lessonDuration) {
+        this.lessonDuration = lessonDuration;
+    }
+
+    public AppointmentStatus getStatus() {
+        return status;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
+    }
+
 }
