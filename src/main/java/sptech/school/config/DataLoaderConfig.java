@@ -35,10 +35,10 @@ public class DataLoaderConfig {
 
             studentRepository.saveAll(Arrays.asList(student1, student2, student3, student4));
 
-            Appointment appointment1 = new Appointment(student1, teacher1, LocalDateTime.now().plusDays(1), 1.5);
-            Appointment appointment2 = new Appointment(student2, teacher2, LocalDateTime.now().plusDays(2), 1.0);
-            Appointment appointment3 = new Appointment(student3, teacher3, LocalDateTime.now().plusDays(3), 2.0);
-            Appointment appointment4 = new Appointment(student4, teacher4, LocalDateTime.now().plusDays(4), 1.5);
+            Appointment appointment1 = new Appointment(student1, teacher1, LocalDateTime.now().plusDays(1), 1.5, "online");
+            Appointment appointment2 = new Appointment(student2, teacher2, LocalDateTime.now().plusDays(2), 1.0, "online");
+            Appointment appointment3 = new Appointment(student3, teacher3, LocalDateTime.now().plusDays(3), 2.0, "online");
+            Appointment appointment4 = new Appointment(student4, teacher4, LocalDateTime.now().plusDays(4), 1.5, "online");
 
             appointmentRepository.saveAll(Arrays.asList(appointment1, appointment2, appointment3, appointment4));
         };

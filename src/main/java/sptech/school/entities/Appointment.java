@@ -1,6 +1,9 @@
 package sptech.school.entities;
 
 import jakarta.persistence.*;
+import sptech.school.enums.AppointmentStatus;
+import sptech.school.enums.PaymentStatus;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -24,14 +27,25 @@ public class Appointment {
 
     private Double lessonDuration;
 
+    @Enumerated(EnumType.STRING)
+    private AppointmentStatus status;
+
+    private String location;
+
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus paymentStatus;
+
     public Appointment() {
     }
 
-    public Appointment(Student student, Teacher teacher, LocalDateTime dateTime, Double lessonDuration) {
+    public Appointment(Student student, Teacher teacher, LocalDateTime dateTime, Double lessonDuration, String location) {
         this.student = student;
         this.teacher = teacher;
         this.dateTime = dateTime;
         this.lessonDuration = lessonDuration;
+        this.location = location;
+        this.status = AppointmentStatus.SCHEDULED;
+        this.paymentStatus = PaymentStatus.PENDING;
     }
 
     public Integer getId() {

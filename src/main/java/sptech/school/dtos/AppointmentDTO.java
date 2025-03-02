@@ -4,6 +4,8 @@ import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.aspectj.weaver.ast.Not;
+import sptech.school.enums.AppointmentStatus;
+import sptech.school.enums.PaymentStatus;
 
 import java.time.LocalDateTime;
 
@@ -18,5 +20,11 @@ public record AppointmentDTO(
         LocalDateTime dateTime,
 
         @NotNull
-        Double lessonDuration
+        Double lessonDuration,
+
+        AppointmentStatus status,
+
+        String location,
+
+        PaymentStatus paymentStatus
 ) {}
