@@ -36,7 +36,7 @@ public class AppointmentService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Users already have an appointment at this time.");
         }
 
-        Appointment appointment = new Appointment(student, teacher,dto.dateTime());
+        Appointment appointment = new Appointment(student, teacher,dto.dateTime(), dto.lessonDuration());
         return appointmentRepository.save(appointment);
     }
 

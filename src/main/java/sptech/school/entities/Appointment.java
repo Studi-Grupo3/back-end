@@ -12,23 +12,26 @@ public class Appointment {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "id_student", nullable = false)
+    @JoinColumn(name = "fkStudent", nullable = false)
     private Student student;
 
     @ManyToOne
-    @JoinColumn(name = "id_teacher", nullable = false)
+    @JoinColumn(name = "idTeacher", nullable = false)
     private Teacher teacher;
 
     @Column(columnDefinition = "DATETIME(0)")
     private LocalDateTime dateTime;
 
+    private Double lessonDuration;
+
     public Appointment() {
     }
 
-    public Appointment(Student student, Teacher teacher, LocalDateTime dateTime) {
+    public Appointment(Student student, Teacher teacher, LocalDateTime dateTime, Double lessonDuration) {
         this.student = student;
         this.teacher = teacher;
         this.dateTime = dateTime;
+        this.lessonDuration = lessonDuration;
     }
 
     public Integer getId() {
@@ -61,5 +64,13 @@ public class Appointment {
 
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public Double getLessonDuration() {
+        return lessonDuration;
+    }
+
+    public void setLessonDuration(Double lessonDuration) {
+        this.lessonDuration = lessonDuration;
     }
 }
