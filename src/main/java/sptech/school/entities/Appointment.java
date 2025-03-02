@@ -14,12 +14,12 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fkStudent", nullable = false)
     private Student student;
 
-    @ManyToOne
-    @JoinColumn(name = "idTeacher", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "fkTeacher", nullable = false)
     private Teacher teacher;
 
     @Column(columnDefinition = "DATETIME(0)")
@@ -87,4 +87,21 @@ public class Appointment {
     public void setLessonDuration(Double lessonDuration) {
         this.lessonDuration = lessonDuration;
     }
+
+    public AppointmentStatus getStatus() {
+        return status;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public PaymentStatus getPaymentStatus() {
+        return paymentStatus;
+    }
+
 }
