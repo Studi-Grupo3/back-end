@@ -1,50 +1,69 @@
 package sptech.school.entities;
 
-import jakarta.persistence.*;
-import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.antlr.v4.runtime.misc.NotNull;
-import org.hibernate.validator.constraints.Email;
+import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
-import sptech.school.dtos.UserDTO;
 
-@Entity
-@Table(name = "tb_usuario")
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+@MappedSuperclass
+public abstract class User {
 
-    @NotBlank(message = "O nome não pode ser vazio")
-    private String username;
+    @NotBlank(message = "The name is mandatory")
+    private String name;
 
-    @Email(message = "O email está inválido")
-    @NotBlank(message = "O email é obrigatório")
+    @Email(message = "The email is invalid")
+    @NotBlank(message = "The email is mandatory")
     @Column(unique = true)
     private String email;
 
-    @CPF(message = "O cpf está inválido")
-    @NotBlank
+    @CPF(message = "The CPF is invalid")
+    @NotBlank(message = "The CPF is mandatory")
+    @Column(unique = true)
     private String cpf;
 
-    @NotNull
+    @NotBlank(message = "The password is mandatory")
     private String password;
 
-    @NotNull
-    private String role;
+    public User() {
+    }
 
-    public User(@Valid UserDTO userDTO) {
-        this(null
-                , userDTO.username()
-                , userDTO.email()
-                , userDTO.cpf()
-                , userDTO.password()
-                , userDTO.role());
+    public User(String name, String email, String cpf, String password) {
+        this.name = name;
+        this.email = email;
+        this.cpf = cpf;
+        this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
