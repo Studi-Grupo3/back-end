@@ -26,7 +26,7 @@ public abstract class AbstractUserService<T extends User, DTO> implements UserSe
 
     @Override
     public T login(@Valid UserLoginDTO user) {
-        return repository.findByEmailIgnoreCaseOrCpfAndPassword(user.email(), user.cpf(), user.password());
+        return repository.findByEmailIgnoreCaseAndPasswordOrCpfAndPassword(user.email(), user.password(), user.cpf(), user.password());
     }
 
     protected abstract T validateSpecify(DTO dto, T userTarget);

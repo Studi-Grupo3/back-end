@@ -7,5 +7,5 @@ import sptech.school.entities.User;
 
 @NoRepositoryBean
 public interface UserRepository<T extends User> extends JpaRepository<T, Integer> {
-    T findByEmailIgnoreCaseOrCpfAndPassword(String email, String cpf, String password);
+    T findByEmailIgnoreCaseAndPasswordOrCpfAndPassword(String email, String password, String cpf, String password2);
 }
