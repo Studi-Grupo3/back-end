@@ -6,7 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sptech.school.dtos.AppointmentDTO;
 import sptech.school.entities.Appointment;
+import sptech.school.mappers.AppointmentMapper;
 import sptech.school.services.AppointmentService;
+import sptech.school.services.TeacherService;
 
 import java.util.List;
 
@@ -15,6 +17,8 @@ import java.util.List;
 public class AppointmentController {
     @Autowired
     private AppointmentService appointmentService;
+    @Autowired
+    private AppointmentMapper appointmentMapper;
 
     @PostMapping
     public ResponseEntity<Appointment> createAppointment(@RequestBody @Valid AppointmentDTO dto) {
@@ -27,8 +31,9 @@ public class AppointmentController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Appointment>> listAppointments() {
-        return ResponseEntity.ok(appointmentService.listAll());
+    public ResponseEntity<List<AppointmentDTO>> listAppointments() {
+        List<AppointmentDTO> appointmentDTOS = appointmentService.listAll();
+        return ResponseEntity.status(200).body(appointmentDTOS);
     }
 
     @PutMapping("/{id}")
