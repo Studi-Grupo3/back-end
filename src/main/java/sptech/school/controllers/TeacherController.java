@@ -48,7 +48,7 @@ public class TeacherController {
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> login(@RequestBody @Valid UserLoginDTO loginDTO) {
         Teacher teacherLogged = teacherService.login(loginDTO);
-        String token = jwtService.generateToken(teacherLogged.getEmail(), teacherLogged.getName(), "teacher");
+        String token = jwtService.generateToken(teacherLogged.getEmail(), teacherLogged.getName(), "TEACHER");
         AuthResponseDTO authResponseDTO = new AuthResponseDTO(teacherLogged.getName(), teacherLogged.getCpf(), teacherLogged.getEmail(), token);
 
         return ResponseEntity.status(200).body(authResponseDTO);

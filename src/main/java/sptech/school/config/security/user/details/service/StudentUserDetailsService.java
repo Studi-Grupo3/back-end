@@ -1,4 +1,4 @@
-package sptech.school.config.security;
+package sptech.school.config.security.user.details.service;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import sptech.school.repositories.StudentRepository;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class StudentUserDetailsService implements UserDetailsService {
     private final StudentRepository studentRepository;
 
-    public UserDetailsServiceImpl(StudentRepository studentRepository) {
+    public StudentUserDetailsService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 

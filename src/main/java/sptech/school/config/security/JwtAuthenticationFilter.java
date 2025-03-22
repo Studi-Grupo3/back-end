@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
+import sptech.school.config.security.user.details.service.StudentUserDetailsService;
+import sptech.school.config.security.user.details.service.TeacherUserDetailsService;
 import sptech.school.services.JwtService;
 
 import java.io.IOException;
@@ -21,11 +23,13 @@ import java.util.List;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private final JwtService jwtService;
-    private final UserDetailsService userDetailsService;
+    private final TeacherUserDetailsService teacherUserDetailsService;
+    private final StudentUserDetailsService studentUserDetailsService;
 
-    public JwtAuthenticationFilter(JwtService jwtService, UserDetailsService userDetailsService) {
+    public JwtAuthenticationFilter(JwtService jwtService, TeacherUserDetailsService teacherUserDetailsService, StudentUserDetailsService studentUserDetailsService) {
         this.jwtService = jwtService;
-        this.userDetailsService = userDetailsService;
+        this.studentUserDetailsService = studentUserDetailsService;
+        this.teacherUserDetailsService = teacherUserDetailsService;
     }
 
     @Override
@@ -43,7 +47,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String role = jwtService.extractRole(token);
 
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+
+            UserDetails userDetails =
+                    "TEACHER".equalsIgnoreCase(role) ? teacherUserDetailsService.loadUserByUsername(email)
+                            : "STUDENT".equalsIgnoreCase(role) ? studentUserDetailsService.loadUserByUsername(email)
+                            : null;
 
             if (jwtService.validateToken(token)) {
                 GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role);

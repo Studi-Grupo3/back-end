@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import sptech.school.config.security.user.details.service.StudentUserDetailsService;
+import sptech.school.config.security.user.details.service.TeacherUserDetailsService;
 import sptech.school.services.JwtService;
 
 @Configuration
@@ -14,11 +16,13 @@ import sptech.school.services.JwtService;
 public class SecurityConfig {
 
     private final JwtService jwtService;
-    private final UserDetailsServiceImpl userDetailsService;
+    private final StudentUserDetailsService studentUserDetailsService;
+    private final TeacherUserDetailsService teacherUserDetailsService;
 
-    public SecurityConfig(JwtService jwtService, UserDetailsServiceImpl userDetailsService) {
+    public SecurityConfig(JwtService jwtService, StudentUserDetailsService studentUserDetailsService, TeacherUserDetailsService teacherUserDetailsService) {
         this.jwtService = jwtService;
-        this.userDetailsService = userDetailsService;
+        this.studentUserDetailsService = studentUserDetailsService;
+        this.teacherUserDetailsService = teacherUserDetailsService;
     }
 
     @Bean
@@ -38,7 +42,7 @@ public class SecurityConfig {
                 .sessionManagement(sessionManagement -> sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                .addFilterBefore(new JwtAuthenticationFilter(jwtService, userDetailsService), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthenticationFilter(jwtService, teacherUserDetailsService, studentUserDetailsService), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 }
