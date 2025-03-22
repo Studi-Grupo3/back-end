@@ -12,5 +12,4 @@ public interface StudentMapper {
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateStudentFromDto(@Valid StudentDTO studentDTO, @MappingTarget Student student);
-
 }
