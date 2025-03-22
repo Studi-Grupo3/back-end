@@ -1,11 +1,11 @@
 package sptech.school.application.service;
 
 import jakarta.validation.Valid;
+import sptech.school.adapters.out.persistence.JpaUserRepository;
+import sptech.school.application.usecase.UserUseCase;
 import sptech.school.domain.dto.UserLoginDTO;
 import sptech.school.domain.entity.User;
 import sptech.school.domain.exception.UserException;
-import sptech.school.application.usecase.UserUseCase;
-import sptech.school.adapters.out.persistence.JpaUserRepository;
 
 public abstract class AbstractUserUseCase<T extends User, DTO> implements UserUseCase<T, DTO> {
     protected final JpaUserRepository<T> repository;
@@ -24,11 +24,8 @@ public abstract class AbstractUserUseCase<T extends User, DTO> implements UserUs
         return repository.save(userTarget);
     }
 
-
     @Override
     public T login(@Valid UserLoginDTO user) {
         return repository.findByEmailIgnoreCaseAndPasswordOrCpfAndPassword(user.email(), user.password(), user.cpf(), user.password());
     }
-
-    protected abstract T validateSpecify(DTO dto, T userTarget);
 }

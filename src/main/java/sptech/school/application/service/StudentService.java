@@ -26,7 +26,7 @@ public class StudentService extends AbstractUserUseCase<Student, StudentDTO> {
     }
 
     @Override
-    protected Student validateSpecify(StudentDTO dto, Student targetUser) {
+    public Student validateSpecify(StudentDTO dto, Student targetUser) {
         studentMapper.updateStudentFromDto(dto, targetUser);
         return targetUser;
     }
