@@ -1,13 +1,16 @@
 package sptech.school.controllers;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sptech.school.dtos.AuthResponseDTO;
 import sptech.school.dtos.StudentDTO;
 import sptech.school.dtos.UserLoginDTO;
 import sptech.school.entities.Student;
 import sptech.school.mappers.StudentMapper;
+import sptech.school.services.JwtService;
 import sptech.school.services.StudentService;
 
 import java.util.List;
@@ -19,6 +22,9 @@ public class StudentController {
     private StudentService studentService;
     @Autowired
     private StudentMapper studentMapper;
+
+    @Autowired
+    private JwtService jwtService;
 
     @PostMapping
     public ResponseEntity<StudentDTO> create(@RequestBody StudentDTO studentDTO) {
@@ -42,9 +48,12 @@ public class StudentController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<StudentDTO> login(@RequestBody @Valid UserLoginDTO loginDTO) {
+    public ResponseEntity<AuthResponseDTO> login(@RequestBody @Valid UserLoginDTO loginDTO) {
         StudentDTO studentLogged = studentMapper.toDto(studentService.login(loginDTO));
-        return ResponseEntity.status(200).body(studentLogged);
+        String token = jwtService.generateToken(studentLogged.email(), studentLogged.name(), "STUDENT");
+        AuthResponseDTO authResponseDTO = new AuthResponseDTO(studentLogged.name(), studentLogged.cpf(), studentLogged.email(), token);
+
+        return ResponseEntity.status(200).body(authResponseDTO);
     }
 
     @DeleteMapping("/{id}")
