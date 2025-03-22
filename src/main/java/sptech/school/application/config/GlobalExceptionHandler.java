@@ -1,4 +1,4 @@
-package sptech.school.applitcation.config;
+package sptech.school.application.config;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolationException;

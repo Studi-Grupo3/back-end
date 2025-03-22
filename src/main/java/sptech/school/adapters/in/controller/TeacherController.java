@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import sptech.school.domain.dto.TeacherDTO;
 import sptech.school.domain.dto.UserLoginDTO;
 import sptech.school.domain.entity.Teacher;
-import sptech.school.applitcation.mappers.TeacherMapper;
-import sptech.school.applitcation.service.TeacherService;
+import sptech.school.application.mappers.TeacherMapper;
+import sptech.school.application.service.TeacherService;
 
 import java.util.List;
 

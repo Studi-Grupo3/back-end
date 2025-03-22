@@ -1,11 +1,11 @@
-package sptech.school.applitcation.service;
+package sptech.school.application.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import sptech.school.domain.entity.Content;
-import sptech.school.applitcation.usecase.ContentRepositoryUseCase;
-import sptech.school.applitcation.usecase.StorageServiceUseCase;
+import sptech.school.application.usecase.ContentRepositoryUseCase;
+import sptech.school.application.usecase.StorageServiceUseCase;
 
 import java.io.IOException;
 import java.io.InputStream;

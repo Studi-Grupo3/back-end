@@ -1,4 +1,4 @@
-package sptech.school.applitcation.service;
+package sptech.school.application.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,7 +8,7 @@ import sptech.school.domain.dto.AppointmentDTO;
 import sptech.school.domain.entity.Appointment;
 import sptech.school.domain.entity.Student;
 import sptech.school.domain.entity.Teacher;
-import sptech.school.applitcation.mappers.AppointmentMapper;
+import sptech.school.application.mappers.AppointmentMapper;
 import sptech.school.adapters.out.persistence.AppointmentRepository;
 
 import java.util.List;

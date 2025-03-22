@@ -1,4 +1,4 @@
-package sptech.school.applitcation.service;
+package sptech.school.application.service;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import sptech.school.domain.dto.TeacherDTO;
 import sptech.school.domain.entity.Teacher;
-import sptech.school.applitcation.mappers.TeacherMapper;
+import sptech.school.application.mappers.TeacherMapper;
 import sptech.school.adapters.out.persistence.JpaUserRepository;
 
 import java.util.List;

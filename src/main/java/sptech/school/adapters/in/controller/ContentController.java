@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import sptech.school.domain.dto.ContentDTO;
 import sptech.school.domain.entity.Content;
-import sptech.school.applitcation.mappers.ContentMapper;
-import sptech.school.applitcation.service.ContentService;
+import sptech.school.application.mappers.ContentMapper;
+import sptech.school.application.service.ContentService;
 
 import java.io.IOException;
 import java.io.InputStream;

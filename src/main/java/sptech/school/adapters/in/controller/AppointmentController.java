@@ -6,8 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sptech.school.domain.dto.AppointmentDTO;
 import sptech.school.domain.entity.Appointment;
-import sptech.school.applitcation.mappers.AppointmentMapper;
-import sptech.school.applitcation.service.AppointmentService;
+import sptech.school.application.mappers.AppointmentMapper;
+import sptech.school.application.service.AppointmentService;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package sptech.school.applitcation.usecase;
+package sptech.school.application.usecase;
 
 import org.springframework.web.multipart.MultipartFile;
 

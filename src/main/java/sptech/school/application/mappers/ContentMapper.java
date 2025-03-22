@@ -1,4 +1,4 @@
-package sptech.school.applitcation.mappers;
+package sptech.school.application.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
