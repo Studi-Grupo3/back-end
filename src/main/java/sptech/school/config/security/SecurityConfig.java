@@ -9,6 +9,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import sptech.school.config.security.user.details.service.StudentUserDetailsService;
 import sptech.school.config.security.user.details.service.TeacherUserDetailsService;
+import sptech.school.exceptions.CustomAuthenticationEntryPoint;
 import sptech.school.services.JwtService;
 
 @Configuration
@@ -28,6 +29,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
+                .exceptionHandling(exceptionHandling -> exceptionHandling
+                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+                )
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(
