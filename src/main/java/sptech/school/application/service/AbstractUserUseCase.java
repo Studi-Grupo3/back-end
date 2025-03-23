@@ -2,6 +2,7 @@ package sptech.school.application.service;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import sptech.school.adapters.out.persistence.JpaUserRepository;
 import sptech.school.application.usecase.UserUseCase;
 import sptech.school.domain.dto.UserLoginDTO;
@@ -13,6 +14,9 @@ public abstract class AbstractUserUseCase<T extends User, DTO> implements UserUs
 
     @Autowired
     private JwtService jwtService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public AbstractUserUseCase(JpaUserRepository<T> repository) {
         this.repository = repository;
@@ -30,8 +34,13 @@ public abstract class AbstractUserUseCase<T extends User, DTO> implements UserUs
 
     @Override
     public T login(@Valid UserLoginDTO user) {
-        T foundUser = repository.findByEmailIgnoreCaseAndPasswordOrCpfAndPassword(user.email(), user.password(), user.cpf(), user.password());
-        if (foundUser == null) {
+        T foundUser = repository.findByEmailIgnoreCase(user.email());
+
+        if (foundUser == null && user.cpf() != null) {
+            foundUser = repository.findByCpf(user.cpf());
+        }
+
+        if (foundUser == null || !passwordEncoder.matches(user.password(), foundUser.getPassword())) {
             throw new UserException("Invalid email/CPF or password");
         }
 
