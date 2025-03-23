@@ -64,7 +64,7 @@ public class StudentController {
         return ResponseEntity.status(204).build();
     }
 
-    @GetMapping("/listar")
+    @GetMapping
     public ResponseEntity<List<StudentDTO>> findAll() {
         List<StudentDTO> studentDTOS = studentService.listAll();
 

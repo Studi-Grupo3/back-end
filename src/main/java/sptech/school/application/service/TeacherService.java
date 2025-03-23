@@ -3,6 +3,7 @@ package sptech.school.application.service;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import sptech.school.domain.dto.TeacherDTO;
@@ -17,11 +18,17 @@ public class TeacherService extends AbstractUserUseCase<Teacher, TeacherDTO> {
     @Autowired
     private TeacherMapper teacherMapper;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public TeacherService(JpaUserRepository<Teacher> repository) {
         super(repository);
     }
 
     public Teacher create(@Valid Teacher teacher) {
+        String hashedPassword = passwordEncoder.encode(teacher.getPassword());
+        teacher.setPassword(hashedPassword);
+
         return repository.save(teacher);
     }
 

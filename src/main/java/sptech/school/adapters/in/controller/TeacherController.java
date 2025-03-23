@@ -31,7 +31,7 @@ public class TeacherController {
     @PostMapping
     public ResponseEntity<Teacher> createUser(@RequestBody @Valid TeacherDTO teacherDTO) {
         Teacher teacherCreated = teacherService.create(teacherMapper.toEntity(teacherDTO));
-        System.out.println(teacherCreated.toString());
+
         return ResponseEntity.status(201).body(teacherCreated);
     }
 
