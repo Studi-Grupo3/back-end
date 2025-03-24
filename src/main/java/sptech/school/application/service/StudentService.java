@@ -47,4 +47,12 @@ public class StudentService extends AbstractUserUseCase<Student, StudentDTO> {
         }
         repository.deleteById(id);
     }
+
+    public StudentMapper getStudentMapper() {
+        return studentMapper;
+    }
+
+    public void setStudentMapper(StudentMapper studentMapper) {
+        this.studentMapper = studentMapper;
+    }
 }

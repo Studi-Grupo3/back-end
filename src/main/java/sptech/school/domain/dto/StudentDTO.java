@@ -15,4 +15,4 @@ public record StudentDTO(
         String password,
 
         String responsibleCellphone
-) {}
+) { }
