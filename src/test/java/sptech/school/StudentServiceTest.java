@@ -1,5 +1,5 @@
 
-package sptech.school.application.service;
+package sptech.school;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
+import sptech.school.application.service.StudentService;
 import sptech.school.domain.dto.StudentDTO;
 import sptech.school.domain.entity.Student;
 import sptech.school.application.mappers.StudentMapper;

@@ -2,10 +2,11 @@ package sptech.school.application.mappers;
 
 import jakarta.validation.Valid;
 import org.mapstruct.*;
+import sptech.school.application.mappers.utils.StringMapperUtil;
 import sptech.school.domain.dto.TeacherDTO;
 import sptech.school.domain.entity.Teacher;
 
-@Mapper(componentModel = "spring", uses = StringMapper.class)
+@Mapper(componentModel = "spring", uses = StringMapperUtil.class)
 public interface TeacherMapper {
     @Valid TeacherDTO toDto(Teacher teacher);
     Teacher toEntity(@Valid TeacherDTO dto);

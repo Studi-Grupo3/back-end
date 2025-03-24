@@ -6,9 +6,9 @@ import org.hibernate.validator.constraints.br.CPF;
 import sptech.school.domain.enumerated.Discipline;
 
 public record TeacherDTO(
-          @NotBlank String name
+          String name
         , @Email String email
         , @CPF String cpf
-        , @NotBlank String password
-        , @NotBlank Discipline discipline
+        , String password
+        , Discipline discipline
 ) { }

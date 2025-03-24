@@ -2,12 +2,17 @@ package sptech.school.application.service;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
+import sptech.school.adapters.out.persistence.JpaResourceFileRepository;
 import sptech.school.adapters.out.persistence.JpaUserRepository;
+import sptech.school.application.usecase.StorageServiceUseCase;
 import sptech.school.application.usecase.UserUseCase;
 import sptech.school.domain.dto.UserLoginDTO;
+import sptech.school.domain.entity.ResourceFile;
 import sptech.school.domain.entity.User;
 import sptech.school.domain.exception.UserException;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 public abstract class AbstractUserUseCase<T extends User, DTO> implements UserUseCase<T, DTO> {
@@ -15,6 +20,12 @@ public abstract class AbstractUserUseCase<T extends User, DTO> implements UserUs
 
     @Autowired
     private JwtService jwtService;
+
+    @Autowired
+    private StorageServiceUseCase storageService;
+
+    @Autowired
+    private JpaResourceFileRepository jpaResourceFileRepository;
 
     public AbstractUserUseCase(JpaUserRepository<T> repository) {
         this.repository = repository;
@@ -38,5 +49,16 @@ public abstract class AbstractUserUseCase<T extends User, DTO> implements UserUs
         }
         foundUser.setLastLogin(LocalDateTime.now());
         return foundUser;
+    }
+
+    public ResourceFile saveFile(MultipartFile file) throws IOException {
+        String location = storageService.saveFile(file);
+        ResourceFile resourceFile = new ResourceFile(
+                file.getOriginalFilename()
+                , file.getContentType()
+                , location
+                , file.getSize()
+        );
+        return jpaResourceFileRepository.save(resourceFile);
     }
 }

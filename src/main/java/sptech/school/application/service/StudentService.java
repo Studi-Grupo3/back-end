@@ -5,10 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import sptech.school.adapters.out.persistence.JpaUserRepository;
+import sptech.school.application.mappers.StudentMapper;
 import sptech.school.domain.dto.StudentDTO;
 import sptech.school.domain.entity.Student;
-import sptech.school.application.mappers.StudentMapper;
-import sptech.school.adapters.out.persistence.JpaUserRepository;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class StudentService extends AbstractUserUseCase<Student, StudentDTO> {
     }
 
     @Override
-    public Student validateSpecify(StudentDTO dto, Student targetUser) {
+    public Student validateSpecify(@Valid StudentDTO dto, Student targetUser) {
         studentMapper.updateStudentFromDto(dto, targetUser);
         return targetUser;
     }

@@ -1,7 +1,9 @@
 
-package sptech.school.application.service;
+package sptech.school;
 
 import org.junit.jupiter.api.*;
+import sptech.school.application.service.JwtService;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Dado o uso da JwtService")

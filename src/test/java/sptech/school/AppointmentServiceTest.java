@@ -1,5 +1,5 @@
 
-package sptech.school.application.service;
+package sptech.school;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -8,6 +8,9 @@ import org.mockito.*;
 import org.springframework.web.server.ResponseStatusException;
 import sptech.school.adapters.out.persistence.AppointmentRepository;
 import sptech.school.application.mappers.AppointmentMapper;
+import sptech.school.application.service.AppointmentService;
+import sptech.school.application.service.StudentService;
+import sptech.school.application.service.TeacherService;
 import sptech.school.domain.dto.AppointmentDTO;
 import sptech.school.domain.entity.Appointment;
 import sptech.school.domain.entity.Student;

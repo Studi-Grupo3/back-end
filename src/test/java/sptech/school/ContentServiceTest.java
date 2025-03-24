@@ -1,12 +1,15 @@
 
-package sptech.school.application.service;
+package sptech.school;
 
 import org.junit.jupiter.api.*;
 import org.mockito.*;
 import org.springframework.mock.web.MockMultipartFile;
+import sptech.school.application.service.ContentService;
 import sptech.school.application.usecase.ContentRepositoryUseCase;
 import sptech.school.application.usecase.StorageServiceUseCase;
+import sptech.school.domain.dto.StudentDTO;
 import sptech.school.domain.entity.Content;
+import sptech.school.domain.entity.Student;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -29,12 +32,20 @@ class ContentServiceTest {
 
     private MockMultipartFile mockFile;
     private Content content;
+    private Student student;
 
     @BeforeEach
     void setUp() {
         mocks = MockitoAnnotations.openMocks(this);
         mockFile = new MockMultipartFile("file", "arquivo.txt", "text/plain", "conteudo".getBytes());
         content = new Content("arquivo.txt", "text/plain", "/uploads/arquivo.txt", mockFile.getSize());
+        student = new Student(
+                "Nome Teste",
+                "email@exemplo.com",
+                "123.456.789-09",
+                "senhaSegura",
+                "11999999999"
+        );
     }
 
     @Test
@@ -43,7 +54,7 @@ class ContentServiceTest {
         when(storageService.saveFile(mockFile)).thenReturn("/uploads/arquivo.txt");
         when(repository.save(any())).thenReturn(content);
 
-        Content salvo = contentService.saveFile(mockFile);
+        Content salvo = contentService.saveFile(mockFile, student);
 
         assertNotNull(salvo);
         assertEquals("arquivo.txt", salvo.getFileName());

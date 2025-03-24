@@ -1,11 +1,12 @@
 
-package sptech.school.application.config.security.user.details.service;
+package sptech.school;
 
 import org.junit.jupiter.api.*;
 import org.mockito.*;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import sptech.school.adapters.out.persistence.StudentRepositoryJpa;
+import sptech.school.application.config.security.user.details.service.StudentUserDetailsService;
 import sptech.school.domain.entity.Student;
 
 import java.util.Optional;

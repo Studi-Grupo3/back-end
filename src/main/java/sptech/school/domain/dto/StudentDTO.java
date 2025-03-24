@@ -5,9 +5,9 @@ import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
 
 public record StudentDTO(
-          @NotBlank String name
+          String name
         , @Email String email
         , @CPF String cpf
-        , @NotBlank String password
-        , @NotBlank String responsibleCellphone
+        , String password
+        , String responsibleCellphone
 ) {}

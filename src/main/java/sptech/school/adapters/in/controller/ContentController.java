@@ -12,6 +12,7 @@ import sptech.school.application.mappers.ContentMapper;
 import sptech.school.application.service.ContentService;
 import sptech.school.domain.dto.ContentDTO;
 import sptech.school.domain.entity.Content;
+import sptech.school.domain.entity.Student;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,22 +22,20 @@ import java.util.Optional;
 @RequestMapping("/files")
 public class ContentController {
     @Autowired
-    private ContentService service;
+    private ContentService contentService;
     @Autowired
     private ContentMapper mapper;
 
-//    value = "/files", consumes = MediaType.MULTIPART_FORM_DATA_VALUE
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<@Valid ContentDTO> uploadArquivo(
-            @RequestParam("file")
-            MultipartFile file) throws IOException {
-        Content content = service.saveFile(file);
+            @RequestParam("file") MultipartFile file, @RequestBody Student student) throws IOException {
+        Content content = contentService.saveFile(file, student);
         return ResponseEntity.ok(mapper.toResponse(content));
     }
 
     @GetMapping("/{id}/info")
     public ResponseEntity<@Valid ContentDTO> getMetadata(@PathVariable Long id) {
-        return service.getMetadataById(id)
+        return contentService.getMetadataById(id)
                 .map(mapper::toResponse)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -44,11 +43,11 @@ public class ContentController {
 
     @GetMapping("/{id}")
     public ResponseEntity<InputStreamResource> downloadArquivo(@PathVariable Long id) throws IOException {
-        Optional<Content> contentOpt = service.getMetadataById(id);
+        Optional<Content> contentOpt = contentService.getMetadataById(id);
         if (contentOpt.isEmpty()) return ResponseEntity.notFound().build();
         Content content = contentOpt.get();
 
-        Optional<InputStream> streamOpt = service.findFileById(id);
+        Optional<InputStream> streamOpt = contentService.findFileById(id);
         if (streamOpt.isEmpty()) return ResponseEntity.notFound().build();
 
         InputStreamResource resource = new InputStreamResource(streamOpt.get());

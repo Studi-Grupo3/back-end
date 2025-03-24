@@ -38,6 +38,8 @@ public abstract class User {
 
     private LocalDateTime lastLogin;
 
+    private String profileImage;
+
     public User() {
     }
 
