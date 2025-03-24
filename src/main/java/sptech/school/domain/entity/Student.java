@@ -10,7 +10,7 @@ public class Student extends User{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank(message = "The responsible cellphone is mandatory!")
+    @NotBlank
     private String responsibleCellphone;
 
     public Student() {

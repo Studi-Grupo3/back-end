@@ -5,12 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
 
 public record UserLoginDTO(
-        @Email(message = "The email is invalid")
-        String email,
+          @Email String email
+        , @CPF String cpf
+        , @NotBlank String password
 
-        @CPF(message = "The CPF is invalid")
-        String cpf,
-
-        @NotBlank(message = "The password is mandatory")
-        String password
 ) {}

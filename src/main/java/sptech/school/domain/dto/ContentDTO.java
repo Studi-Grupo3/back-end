@@ -8,5 +8,4 @@ public record ContentDTO(
         , @NotBlank String contentType
         , @NotBlank Long fileSize
         , @NotBlank String formattedSize
-) {
-}
+) { }

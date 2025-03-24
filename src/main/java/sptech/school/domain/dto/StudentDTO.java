@@ -1,18 +1,13 @@
 package sptech.school.domain.dto;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
 
 public record StudentDTO(
-        String name,
-
-        @Email(message = "The email is invalid")
-        String email,
-
-        @CPF(message = "The CPF is invalid")
-        String cpf,
-
-        String password,
-
-        String responsibleCellphone
+          @NotBlank String name
+        , @Email String email
+        , @CPF String cpf
+        , @NotBlank String password
+        , @NotBlank String responsibleCellphone
 ) {}
