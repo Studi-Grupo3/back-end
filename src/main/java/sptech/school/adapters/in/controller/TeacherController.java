@@ -4,11 +4,16 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+
+import sptech.school.application.mappers.TeacherMapper;
+import sptech.school.application.service.JwtService;
+import sptech.school.application.service.TeacherService;
+import sptech.school.domain.dto.AuthResponseDTO;
 import sptech.school.domain.dto.TeacherDTO;
 import sptech.school.domain.dto.UserLoginDTO;
 import sptech.school.domain.entity.Teacher;
-import sptech.school.application.mappers.TeacherMapper;
-import sptech.school.application.service.TeacherService;
+
 
 import java.util.List;
 
@@ -19,6 +24,9 @@ public class TeacherController {
     private TeacherService teacherService;
     @Autowired
     private TeacherMapper teacherMapper;
+
+    @Autowired
+    private JwtService jwtService;
 
     @PostMapping
     public ResponseEntity<Teacher> createUser(@RequestBody @Valid TeacherDTO teacherDTO) {
@@ -40,9 +48,12 @@ public class TeacherController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TeacherDTO> login(@RequestBody @Valid UserLoginDTO loginDTO) {
+    public ResponseEntity<AuthResponseDTO> login(@RequestBody @Valid UserLoginDTO loginDTO) {
         Teacher teacherLogged = teacherService.login(loginDTO);
-        return ResponseEntity.status(200).body(teacherMapper.toDto(teacherLogged));
+        String token = jwtService.generateToken(teacherLogged.getEmail(), teacherLogged.getName(), "TEACHER");
+        AuthResponseDTO authResponseDTO = new AuthResponseDTO(teacherLogged.getName(), teacherLogged.getCpf(), teacherLogged.getEmail(), token);
+
+        return ResponseEntity.status(200).body(authResponseDTO);
     }
 
     @DeleteMapping("/{id}")

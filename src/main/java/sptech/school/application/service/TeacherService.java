@@ -26,7 +26,7 @@ public class TeacherService extends AbstractUserUseCase<Teacher, TeacherDTO> {
     }
 
     @Override
-    protected Teacher validateSpecify(TeacherDTO dto, Teacher targetUser) {
+    public Teacher validateSpecify(TeacherDTO dto, Teacher targetUser) {
         teacherMapper.updateTeacherFromDto(dto, targetUser);
         return targetUser;
     }
