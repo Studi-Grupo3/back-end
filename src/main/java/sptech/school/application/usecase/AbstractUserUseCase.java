@@ -1,12 +1,11 @@
-package sptech.school.application.service;
+package sptech.school.application.usecase;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 import sptech.school.adapters.out.persistence.JpaResourceFileRepository;
 import sptech.school.adapters.out.persistence.JpaUserRepository;
-import sptech.school.application.usecase.StorageServiceUseCase;
-import sptech.school.application.usecase.UserUseCase;
+import sptech.school.application.service.JwtService;
 import sptech.school.domain.dto.UserLoginDTO;
 import sptech.school.domain.entity.ResourceFile;
 import sptech.school.domain.entity.User;

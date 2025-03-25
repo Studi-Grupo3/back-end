@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import sptech.school.adapters.out.persistence.JpaUserRepository;
 import sptech.school.application.mappers.StudentMapper;
+import sptech.school.application.usecase.AbstractUserUseCase;
 import sptech.school.domain.dto.StudentDTO;
 import sptech.school.domain.entity.Student;
 
