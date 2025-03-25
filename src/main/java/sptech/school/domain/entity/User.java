@@ -4,25 +4,41 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
+import java.time.LocalDateTime;
 
 @MappedSuperclass
+@EnableJpaAuditing
 public abstract class User {
 
-    @NotBlank(message = "The name is mandatory")
+    @NotBlank
     private String name;
 
-    @Email(message = "The email is invalid")
-    @NotBlank(message = "The email is mandatory")
+    @Email
+    @NotBlank
     @Column(unique = true)
     private String email;
 
-    @CPF(message = "The CPF is invalid")
-    @NotBlank(message = "The CPF is mandatory")
+    @CPF
+    @NotBlank
     @Column(unique = true)
     private String cpf;
 
-    @NotBlank(message = "The password is mandatory")
+    @NotBlank
     private String password;
+
+    @CreatedDate
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
+
+    private LocalDateTime lastLogin;
+
+    private String profileImage;
 
     public User() {
     }
@@ -64,5 +80,29 @@ public abstract class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public LocalDateTime getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(LocalDateTime lastLogin) {
+        this.lastLogin = lastLogin;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

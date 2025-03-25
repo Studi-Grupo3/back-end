@@ -1,13 +1,19 @@
-package sptech.school.application.service;
+package sptech.school.application.usecase;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.multipart.MultipartFile;
+import sptech.school.adapters.out.persistence.JpaResourceFileRepository;
 import sptech.school.adapters.out.persistence.JpaUserRepository;
-import sptech.school.application.usecase.UserUseCase;
+import sptech.school.application.service.JwtService;
 import sptech.school.domain.dto.UserLoginDTO;
+import sptech.school.domain.entity.ResourceFile;
 import sptech.school.domain.entity.User;
 import sptech.school.domain.exception.UserException;
+
+import java.io.IOException;
+import java.time.LocalDateTime;
 
 public abstract class AbstractUserUseCase<T extends User, DTO> implements UserUseCase<T, DTO> {
     protected final JpaUserRepository<T> repository;
@@ -17,6 +23,12 @@ public abstract class AbstractUserUseCase<T extends User, DTO> implements UserUs
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private StorageServiceUseCase storageService;
+
+    @Autowired
+    private JpaResourceFileRepository jpaResourceFileRepository;
 
     public AbstractUserUseCase(JpaUserRepository<T> repository) {
         this.repository = repository;
@@ -44,6 +56,18 @@ public abstract class AbstractUserUseCase<T extends User, DTO> implements UserUs
             throw new UserException("Invalid email/CPF or password");
         }
 
+        foundUser.setLastLogin(LocalDateTime.now());
         return foundUser;
+    }
+
+    public ResourceFile saveFile(MultipartFile file) throws IOException {
+        String location = storageService.saveFile(file);
+        ResourceFile resourceFile = new ResourceFile(
+                file.getOriginalFilename()
+                , file.getContentType()
+                , location
+                , file.getSize()
+        );
+        return jpaResourceFileRepository.save(resourceFile);
     }
 }

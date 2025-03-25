@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import sptech.school.application.usecase.AbstractUserUseCase;
 import sptech.school.domain.dto.TeacherDTO;
 import sptech.school.domain.entity.Teacher;
 import sptech.school.application.mappers.TeacherMapper;

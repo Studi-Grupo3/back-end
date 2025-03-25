@@ -6,15 +6,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import org.springframework.web.multipart.MultipartFile;
+import sptech.school.application.mappers.ResourceFileMapper;
+import sptech.school.application.mappers.StudentMapper;
 import sptech.school.application.mappers.TeacherMapper;
 import sptech.school.application.service.JwtService;
 import sptech.school.application.service.TeacherService;
 import sptech.school.domain.dto.AuthResponseDTO;
+import sptech.school.domain.dto.ResourceFileDTO;
 import sptech.school.domain.dto.TeacherDTO;
 import sptech.school.domain.dto.UserLoginDTO;
+import sptech.school.domain.entity.ResourceFile;
 import sptech.school.domain.entity.Teacher;
 
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -24,6 +30,9 @@ public class TeacherController {
     private TeacherService teacherService;
     @Autowired
     private TeacherMapper teacherMapper;
+
+    @Autowired
+    private ResourceFileMapper resourceFileMapper;
 
     @Autowired
     private JwtService jwtService;
@@ -66,5 +75,12 @@ public class TeacherController {
     public ResponseEntity<List<TeacherDTO>> findAllTeachers() {
         List<TeacherDTO> teacherDTOS = teacherService.listAll();
         return ResponseEntity.status(200).body(teacherDTOS);
+    }
+
+    @PostMapping("/upload-profile-photo")
+    public ResponseEntity<@Valid ResourceFileDTO> uploadArquivo(
+            @RequestParam("file") MultipartFile file) throws IOException {
+        ResourceFile resourceFile = teacherService.saveFile(file);
+        return ResponseEntity.ok(resourceFileMapper.toResponse(resourceFile));
     }
 }
