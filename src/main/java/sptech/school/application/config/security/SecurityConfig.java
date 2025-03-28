@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import sptech.school.application.config.CorsConfig;
 import sptech.school.application.config.security.user.details.service.StudentUserDetailsService;
 import sptech.school.application.config.security.user.details.service.TeacherUserDetailsService;
 import sptech.school.application.service.JwtService;
@@ -22,11 +23,13 @@ public class SecurityConfig {
     private final JwtService jwtService;
     private final StudentUserDetailsService studentUserDetailsService;
     private final TeacherUserDetailsService teacherUserDetailsService;
+    private final CorsConfig corsConfig;
 
-    public SecurityConfig(JwtService jwtService, StudentUserDetailsService studentUserDetailsService, TeacherUserDetailsService teacherUserDetailsService) {
+    public SecurityConfig(JwtService jwtService, StudentUserDetailsService studentUserDetailsService, TeacherUserDetailsService teacherUserDetailsService, CorsConfig corsConfig) {
         this.jwtService = jwtService;
         this.studentUserDetailsService = studentUserDetailsService;
         this.teacherUserDetailsService = teacherUserDetailsService;
+        this.corsConfig = corsConfig;
     }
 
     @Bean
@@ -36,6 +39,7 @@ public class SecurityConfig {
                         .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
                 )
                 .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.configurationSource(corsConfig.corsConfigurationSource()))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(
                                 "/swagger-ui/**",
@@ -44,6 +48,7 @@ public class SecurityConfig {
                         ).permitAll()
                         .requestMatchers(HttpMethod.POST,"/students/login", "/students").permitAll()
                         .requestMatchers(HttpMethod.POST,("/teachers/login"), "/teachers").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/payments", "/payments/preference").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sessionManagement -> sessionManagement
